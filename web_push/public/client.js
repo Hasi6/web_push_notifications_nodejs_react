@@ -16,10 +16,17 @@
 
      // Register Push
      console.log( 'Regsiter Push' )
-     const subscription = await register.pushManager.subscribe( {
-         userVisibleOnly: true,
-         applicationServerKey: urlBase64ToUint8Array( publicKey )
-     } )
+     let subscription
+     try {
+         subscription = await register.pushManager.subscribe( {
+             userVisibleOnly: true,
+             applicationServerKey: urlBase64ToUint8Array( publicKey )
+         } )
+         console.log()
+         localStorage.setItem( "noti", JSON.stringify( subscription ) )
+     } catch ( err ) {
+         console.log( err.message )
+     }
      console.log( "Push Registerd" )
 
      // Send Push Notification

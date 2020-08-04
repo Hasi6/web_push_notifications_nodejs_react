@@ -5,7 +5,8 @@ const App = () => {
 
   const onClick = async () => {
     try {
-      const res = await axios.post('http://localhost:5000/subscription')
+      const body = JSON.parse(localStorage.getItem('noti') || '{name: "hasi"}')
+      const res = await axios.post('http://localhost:5000/subscription', body)
       setRes(res.data)
     } catch (err) {
       console.log(err.message)
