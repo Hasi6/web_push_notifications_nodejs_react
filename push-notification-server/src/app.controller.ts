@@ -4,30 +4,28 @@ import {
   Post,
   Body,
   InternalServerErrorException,
-} from "@nestjs/common";
-import { AppService } from "./app.service";
-import { privateKey, publicKey } from "./main";
-import { setVapidDetails, sendNotification } from "web-push";
+} from '@nestjs/common';
+import { AppService } from './app.service';
+import { privateKey, publicKey } from './main';
+import { setVapidDetails, sendNotification } from 'web-push';
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Post("/subscription")
+  @Post('/subscription')
   sendPushNotifications(@Body() body: any): string {
     try {
-      setVapidDetails("mailto:test@test.com", publicKey, privateKey);
-
+      setVapidDetails('mailto:test@test.com', publicKey, privateKey);
       // Get Push Subscription Object
       const subscription = body;
+      console.log(subscription);
 
       // Create Payload
-      const payload = JSON.stringify({ title: "Push Test" });
+      const payload = JSON.stringify({ title: 'Push Test' });
 
       // Send Notification
       setTimeout(() => {
-        sendNotification(subscription, payload).catch((err) =>
-          console.log(err)
-        );
+        sendNotification(subscription, payload).catch(err => console.log(err));
       }, 10000);
 
       return this.appService.getHello();
